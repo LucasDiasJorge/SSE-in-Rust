@@ -1,18 +1,25 @@
-use actix_web::{web, App, HttpRequest, HttpResponse, HttpServer, Responder};
+use core::pin::Pin;
+use core::time::Duration;
+use actix_web::{get, web, App, HttpRequest, HttpResponse, HttpServer, Responder};
 use futures_util::stream::Stream;
-use std::{pin::Pin, time::Duration};
 use tokio::time::interval;
 use bytes::Bytes;
+use serde::Deserialize;
 
-async fn sse(_req: HttpRequest) -> impl Responder {
+#[derive(Deserialize)]
+struct Info {
+    message: String,
+}
+
+#[get("/event/{message}")]
+async fn sse(_req: HttpRequest, info: web::Path<Info>) -> impl Responder {
+
     let stream = async_stream::stream! {
         let mut interval = interval(Duration::from_secs(2));
-        let mut counter = 0;
 
         loop {
             interval.tick().await;
-            counter += 1;
-            let data = format!("data: {{ \"message\": \"Event {}\" }}\n\n", counter);
+            let data = format!("data: {{ \"message\": \"Event {}\" }}\n\n", info.message);
             yield Ok::<_, actix_web::Error>(Bytes::from(data)); // Temporariamente retorna "data" sem encerrar a execução do bloco assíncrono.
         }
     };
@@ -26,9 +33,9 @@ async fn sse(_req: HttpRequest) -> impl Responder {
 async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         App::new()
-            .route("/events", web::get().to(sse))
+            .service(sse)
     })
-        .bind(("127.0.0.1", 8080))?
+        .bind(("127.0.0.1", 8081))?
         .run()
         .await
 }
