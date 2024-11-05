@@ -9,7 +9,6 @@ pub enum AuthError {
     ServiceUnavailable,
 }
 
-// Extract the Bearer token from the authorization header
 pub fn extract_token(req: &HttpRequest) -> Result<&str, AuthError> {
     req.headers()
         .get("Authorization")
@@ -18,7 +17,6 @@ pub fn extract_token(req: &HttpRequest) -> Result<&str, AuthError> {
         .ok_or(AuthError::MissingToken)
 }
 
-// Check the token's validity via the external auth service
 pub async fn validate_token(token: &str) -> Result<(), AuthError> {
     let client = Client::new();
     let mut params = HashMap::new();

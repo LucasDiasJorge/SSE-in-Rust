@@ -1,7 +1,7 @@
 use actix_web::{App, HttpServer};
 
 mod sse;
-mod payload;
+mod models;
 mod services;
 
 #[actix_web::main]
