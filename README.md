@@ -40,7 +40,7 @@ O projeto consiste em um único arquivo principal que define um endpoint para SS
 
 O servidor enviará dados no seguinte formato:
 ```
-data: { "message": "Event mensagem" }
+data: {"id":-1,"timestamp":1730830535,"message":"mensagem"}
 ```
 
 ### Observações
