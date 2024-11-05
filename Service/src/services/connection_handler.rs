@@ -8,6 +8,7 @@ use tokio::time::interval;
 use crate::models::event::EventPayload;
 use crate::models::handshake::HandshakePayload;
 use crate::services::auth::{extract_token, validate_token, AuthError};
+use crate::kafka::kafka_consumer::KafkaConsumer;
 
 pub(crate) async fn on_connect(req: &HttpRequest) -> Result<(), HttpResponse> {
 
@@ -27,6 +28,9 @@ pub(crate) async fn on_connect(req: &HttpRequest) -> Result<(), HttpResponse> {
 }
 
 pub(crate) fn report_events(message: String) -> Pin<Box<dyn Stream<Item = Result<Bytes, Error>>>> {
+
+    let kafka_consumer: KafkaConsumer = KafkaConsumer::new();
+
     let stream = stream! {
         let mut interval = interval(Duration::from_secs(2));
 
