@@ -48,6 +48,13 @@ data: {"id":-1,"timestamp":1730830535,"message":"mensagem"}
 - O fluxo de eventos continua até que a conexão seja encerrada pelo cliente.
 - Este exemplo é uma implementação básica e pode ser expandido com tratamento de erros e funcionalidades adicionais conforme necessário.
 
+- Comando para acessar e escrever mensagens no kafka utilizando Docker compose: 
+
+```
+docker exec -it <your dockerized kafka name> bash
+kafka-console-producer --topic test-topic --bootstrap-server localhost:9092
+```
+
 ## Docs
 
 _[Async article](https://aarambhdevhub.medium.com/mastering-async-programming-in-rust-with-tokio-full-tutorial-real-world-examples-635c6e5dcdcc)_
