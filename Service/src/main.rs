@@ -3,7 +3,6 @@ use actix_web::{App, HttpServer};
 mod sse;
 mod models;
 mod services;
-mod kafka;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {

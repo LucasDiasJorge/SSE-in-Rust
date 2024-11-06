@@ -1,6 +1,5 @@
-use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
-use serde_json::{Number, Value};
+use serde_json::Number;
 
 #[derive(Deserialize, Serialize, Debug, Clone)]
 pub(crate) struct EventPayload {

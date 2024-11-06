@@ -14,7 +14,7 @@ pub async fn sse(
     //    return Ok(response);
     //}
 
-    let event_stream = report_events(info.message.clone());
+    let event_stream = report_events();
 
     Ok(
         HttpResponse::Ok()
