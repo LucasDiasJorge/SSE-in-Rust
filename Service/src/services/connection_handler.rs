@@ -46,9 +46,7 @@ pub async fn handle_message(msg: BorrowedMessage<'_>) -> Result<Bytes, Error> {
         message: payload,
     };
 
-    let data = format!("data: {:?}\n", event_payload);
-
-    Ok(Bytes::from(data))
+    Ok(Bytes::from(event_payload.serialize()))
 }
 
 pub fn report_events() -> Pin<Box<dyn Stream<Item = Result<Bytes, Error>>>> {
