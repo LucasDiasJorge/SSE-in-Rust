@@ -10,6 +10,8 @@ pub(crate) struct EventPayload {
 
 impl EventPayload {
     pub(crate) fn serialize(&self) -> String {
-        serde_json::to_string(self).unwrap_or_else(|_| String::from("{}"))
+        serde_json::to_string(self)
+            .map(|json| format!("{}\n", json))
+            .unwrap_or_else(|_| String::from("{}\n"))
     }
 }
