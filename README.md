@@ -40,13 +40,20 @@ O projeto consiste em um único arquivo principal que define um endpoint para SS
 
 O servidor enviará dados no seguinte formato:
 ```
-data: { "message": "Event mensagem" }
+data: {"id":-1,"timestamp":1730830535,"message":"mensagem"}
 ```
 
 ### Observações
 
 - O fluxo de eventos continua até que a conexão seja encerrada pelo cliente.
 - Este exemplo é uma implementação básica e pode ser expandido com tratamento de erros e funcionalidades adicionais conforme necessário.
+
+- Comando para acessar e escrever mensagens no kafka utilizando Docker compose: 
+
+```
+docker exec -it <your dockerized kafka name> bash
+kafka-console-producer --topic test-topic --bootstrap-server localhost:9092
+```
 
 ## Docs
 
