@@ -1,6 +1,5 @@
 use actix_web::HttpRequest;
 use reqwest::Client;
-use std::collections::HashMap;
 
 #[derive(Debug)]
 pub enum AuthError {
@@ -9,7 +8,6 @@ pub enum AuthError {
     ServiceUnavailable,
 }
 
-// Extract the Bearer token from the authorization header
 pub fn extract_token(req: &HttpRequest) -> Result<&str, AuthError> {
     req.headers()
         .get("Authorization")
@@ -18,15 +16,12 @@ pub fn extract_token(req: &HttpRequest) -> Result<&str, AuthError> {
         .ok_or(AuthError::MissingToken)
 }
 
-// Check the token's validity via the external auth service
 pub async fn validate_token(token: &str) -> Result<(), AuthError> {
     let client = Client::new();
-    let mut params = HashMap::new();
-    params.insert("token", token.to_string());
 
     let response = client
-        .post("http://localhost:8000/api/v2/token-info")
-        .json(&params)
+        .get("http://localhost:8889/api/v2/core/info")
+        .bearer_auth(token)
         .send()
         .await
         .map_err(|_| AuthError::ServiceUnavailable)?;

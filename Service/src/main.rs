@@ -1,8 +1,7 @@
 use actix_web::{App, HttpServer};
-use serde::Deserialize;
 
 mod sse;
-mod messages;
+mod models;
 mod services;
 
 #[actix_web::main]
